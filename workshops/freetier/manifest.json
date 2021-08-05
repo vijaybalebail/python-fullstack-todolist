@@ -1,0 +1,37 @@
+{
+  "workshoptitle": "My ToDo List App with React JS",
+  "help": "livelabs-help-db_us@oracle.com",
+    "tutorials": [
+      {
+        "title": "Introduction",
+        "description": "Introduction",
+        "filename": "../../intro/intro.md"
+      },
+      {
+        "title": "Getting Started",
+        "description": "Prerequisites",
+        "filename": "https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/cloud-login/pre-register-free-tier-account.md"
+      },
+      {
+        "title": "Lab 1: Setup Dev Environment",
+        "filename": "../../setup-dev-environment/setup-dev-environment.md"
+      },
+      {
+        "title": "Lab 2: Backend (Docker basics and Oracle Backend drivers)",
+        "filename": "../../Python_fullstack/DockerBasics.md"
+      },
+      {
+        "title": "Lab 3: Backend (Python/Flask)",
+        "filename": "../../backend/backend.md"
+      },
+      {
+        "title": "Lab 3: Frontend (React JS)",
+        "filename": "../../frontend/frontend.md"
+      },
+      {
+        "title": "Need Help?",
+        "description": "Solutions to Common Problems and Directions for Receiving Live Help",
+        "filename":"https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/need-help/need-help-freetier.md"
+      }
+   ]
+}
