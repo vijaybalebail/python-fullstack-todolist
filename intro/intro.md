@@ -12,7 +12,7 @@ Estimated Lab Time: 70 minutes
 
 You will will learn how to use the Autonomous Database, the Container Registry, the Kubernetes Cluster (OKE) , Python/Flask  and the API Gateway managed services of the Oracle Cloud Infrastructure through the deployment of a simple MyToDo List React JS application.
 
-![](./images/architecture.png " ")
+![](./images/FullstackArch.png " ")
 
 ### Objectives
 

@@ -2,20 +2,28 @@
 
 ## Introduction
 
-In this lab,
-- You will build a Python/Flask Docker image.
-- you will deploy the Docker image to OKE.
-- then configure the API Gateway.
+In this lab, you will deploy the pre-built Helidon Java backend Docker image to OKE, then configure the API Gateway.
 
-Estimated time: ~45 -minutes.
+Estimated time: ~25-minutes.
 
 ### Understanding the Java/backend application
 
 As with most React applications (https://reactjs.org/), this application uses remote APIs to handle data persistence. The backend implements 5 REST APIs including:
 - Retrieving the current list of todo items
 - Adding a new todo item
-- Updating an existing todo items
+- Finding a todo item by its id
+- Updating an existing todo item
 - Deleting a todo item.
+
+The APIs are documented using Swagger @ http://130.61.67.158:8780/swagger-ui/#/
+
+The backend is implemented using the following Java classes (under ./backend/src/...):   
+- Main.java: starts and configure the main entry points.
+- ToDoItem.java: maps a Todo Item instance to/from JSON  document
+- ToDoItemStorage.java: stores the Todo item in a persistent store i.e., the Oracle Autonomous database
+- ToDoListAppService.java: implements the Helidon service and exposes the REST APIs
+
+  ![](images/Backend-APIs.png " ")
 
 
 ### Objectives

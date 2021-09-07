@@ -92,6 +92,8 @@ Estimated Lab Time: ~25 minutes
 
        `./setCompartmentId.sh ocid1.compartment.oc1..aaaaaaaaxbvaatfz6yourcomparmentidhere5dnzgcbivfwvsho77myfnqq us-ashburn-1`
 
+       This will set the environment variables that will allow other scripts to pick the information.
+
   6.  To create an OKE cluster, return to the OCI console and open up the hamburger button in the top-left corner of the Console and go to **Developer Services > Kubernetes Clusters**.
 
     ![](images/27-dev-services-oke.png " ")
@@ -124,7 +126,7 @@ Estimated Lab Time: ~25 minutes
     There is no need to wait for the cluster to be fully provisioned at this point as we will verify cluster creation and create a kube config in order to access it in a later step.
 
 
-## **STEP 3**: Create the ATP database, TODOUSER and the TODOITEM table
+## **STEP 3**: Create the ATP database
 
 1. Open up the hamburger menu in the top-left corner of the Console and select **Autonomous Transaction Processing**.
 
@@ -135,14 +137,14 @@ Estimated Lab Time: ~25 minutes
     ![](images/create-autonomous.png " ")
 
 3. Set **Compartment, Database Name and Display Name**.
-   
+
 	- Set the workload type to "Transaction Processing".
 	- Accept the default Deployment Type "Shared Infrastructure".
-   
+
    ![](images/ATP-config-1.png " ")
 
 4.  Set **ADMIN password, Network Access Type and License Type**
-   
+
 	- Set the database ADMIN password (12 to 30 characters, at least one uppercase letter, one lowercase letter, and one number) and confirm.
 		Please note the ADMIN password; it will be required later.
 	- Set the Network Access type to "Allow secure access from specific IPs an VCNs".
@@ -154,16 +156,22 @@ Estimated Lab Time: ~25 minutes
 	The database creation will take a few minutes.
 
 5. Populate mtdrworkshopdbid.txt with the database OCID
-  
+
   	- Create  the `~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt` file.
 		```
 		<copy>touch ~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt</copy>
 		```
 
-  	- Copy the OCID of the newly created database from the Cloud console and
+    ![](images/42-copy-atp-ocids2.png " ")
+
+    - Copy the OCID of the newly created database from the Cloud console and
     add it into `~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt` file.
 
-    ![](images/42-copy-atp-ocids2.png " ")
+    ```
+    eg.
+     echo ocid1.autonomousdatabase.oc1.xxx.xxxx  > ~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt
+    ```
+
 
 6. Generate the Wallet for your ATP Connectivity
 
@@ -174,7 +182,11 @@ Estimated Lab Time: ~25 minutes
      copied OCID.
 
 		```
-		<copy>./generateWallet.sh $OCID</copy>
+		<copy>
+     cd ~/mtdrworkshop/setup-dev-environment
+     OCID=$( cat ~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt )
+    ./generateWallet.sh < cat ~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt
+     </copy>
 		```
     - Execute generateWallet.sh ocid1.autonomousdatabase.oc1.phx.abyhqlj....
 
@@ -207,18 +219,21 @@ Estimated Lab Time: ~25 minutes
         <copy> CREATE USER todouser IDENTIFIED BY <password> DEFAULT TABLESPACE data QUOTA UNLIMITED ON data;</copy>
         ```
        - Grant some privileges to TODOUSER by executing the following command
-        
+
         ```
         <copy>grant create session, create view, create sequence, create procedure, create table, create trigger, create type, create materialized view to todouser;</copy>
         ```
 
-      - Connect as TODOUSER
-        SQL> connect todouser@mtdrdb_tp
+      -  Verify you can connect as TODOUSER with the password you provided.
+      ```
+        SQL> <copy> connect todouser@mtdrdb_tp </copy>
+      ```
 
+<!--
       - Create TODOITEM table
 
          Copy the following command in the Worksheet and execute.
-         
+
          ```
          <copy>CREATE TABLE todoitem (
            id NUMBER GENERATED ALWAYS AS IDENTITY,
@@ -230,16 +245,18 @@ Estimated Lab Time: ~25 minutes
          ```
 
       - Insert the first row, manually into TODOITEM table
-        
+
         ```
         <copy>insert into todoitem  (description) values ('Manual item insert');</copy>
         ```
 
       Then commit the inserted row
-        
+
         ```
         <copy>commit;</copy>
         ```
+
+-->
 
 ## **STEP 4**: Create an OCI Registry and Auth key
 
@@ -292,12 +309,14 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
 
 	For example `dockerLogin.sh user.foo@bar.com "8nO[BKNU5iwasdf2xeefU;yl"`
 
-9. Once successfully logged into Container Registry, we can list the existing docker images. Since this is the first time logging into Registry, no images will be shown.
+9. Once successfully logged into Container Docker Registry, you should see the "Login Succeeded" in the cloud shell.
+
+   We can list the existing docker images. Since this is the first time logging into Registry, no images will be shown.
 
     ```
     <copy>docker images </copy>
     ```
-
+<!--
 ## **STEP 5**: Install GraalVM in Cloud Shell
 
  We will be using JDK 11 in Cloud Shell to build the Java/Helidon image
@@ -306,18 +325,19 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
     ```
     <copy>export MTDRWORKSHOP_LOCATION=~/mtdrworkshop</copy>
     ```
-    
+
     ```
     <copy>export WORKINGDIR=$MTDRWORKSHOP_LOCATION/workingdir</copy>
     ```  
-   
+
    	Make sure to be in mtdrwokshop/setup-dev-environment directory then execute the following script
-		
+
       ```
       <copy>./installGraalVM.sh</copy>
       ```
+-->
 
-## **STEP 6**: Access OKE from the Cloud Shell
+## **STEP 5**: Access OKE from the Cloud Shell
 
 1. Create the mtdrworkshop/workingdir/mtdrworkshopclusterid.txt file
 
@@ -330,6 +350,10 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
 3. Copy the mdtrworkshopcluster id and paste into the newly created file
   ![](images/mtdrworkshop-cluster-id.png " ")
 
+      ```
+      example
+       echo ocid1.cluster.oc1.yyy.xxxxx  > ~/mtdrworkshop/workingdir/mtdrworkshopclusterid.txt
+      ```
 
 4. Run `./verifyOKEAndCreateKubeConfig.sh`
 
@@ -341,7 +365,7 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
 
   ![](images/verifyOKEOutput.png " ")
 
-## **STEP 7**: Configuring Network Security Rules
+## **STEP 6**: Configuring Network Security Rules
 1. The network security rules control the inbound (Ingres) and the outbound (Egress) traffic. As we will be configuring the API Gateway in Part II, we will not set tight security rules at the Kubernetes cluster level.
 2. Navigate to **Developer Services > Kubernetes Clusters**
    	- Click on the **mtdrworkshopcluster**
@@ -366,6 +390,5 @@ Congratulations, you have completed lab 1; you may now [proceed to the next lab]
 
 ## Acknowledgements
 
-* **Author** -  - Kuassi Mensah, Dir. Product Management, Java Database Access
-* **Contributors** - Jean de Lavarene, Sr. Director of Development, JDBC/UCP
-* **Last Updated By/Date** - Anoosha Pilli, Database Product Management,  April 2021
+* **Author** -  - Vijay Balebail, Dir. Product Management.
+* **Contributors** - Kuassi Mensah, Dir. Product Management, Java Database Access
