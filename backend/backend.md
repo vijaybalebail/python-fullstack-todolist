@@ -9,7 +9,7 @@ In this lab,
 
 Estimated time: ~45 -minutes.
 
-### Understanding the Java/backend application
+### Understanding the Python/backend application
 
 As with most React applications (https://reactjs.org/), this application uses remote APIs to handle data persistence. The backend implements 5 REST APIs including:
 - Retrieving the current list of todo items
@@ -53,18 +53,35 @@ As with most React applications (https://reactjs.org/), this application uses re
  Example: `<region-key>.ocir.io/<object-storage-namespace>/<firstname.lastname>/<repo-name>`
  If the variable is not set or is an empty string, the push will fail (but the docker image will be built).
 
-2. Make sure to be in backend/target/classes/wallet directory then execute
+2. copy the Python/Flask Todo app from github.
 
+   ```<copy>
+   mkdir ~/mtdrworkshop/python
+   cd  ~/mtdrworkshop/python
+   git clone https://github.com/vijaybalebail/Todo-List-Dockerized-Flask-WebApp.git
+   cd Todo-List-Dockerized-Flask-WebApp
+   unzip ~/mtdrworkshop/setup-dev-environment/wallet.zip</copy>
+	 ```
+
+3. Unzip the database wallte.zip file within the new web app.
    ```
-	<copy>unzip ~/mtdrworkshop/setup-dev-environment/wallet.zip</copy>
-	```
+   <copy>unzip ~/mtdrworkshop/setup-dev-environment/wallet.zip</copy>
+	 ```
 
-3. Pick mtdrb_tp service alias (see the list of aliases in
+3.  Pick mtdrb_tp service alias (see the list of aliases in
    ./backend/target/classes/wallet/tnsnames.ora)
 
    ![](images/tnsnames-ora.png " ")
 
-4. Edit ./backend/target/classes/application.yaml to set the database service and user password
+4. There are many ways to pass database credentials from the backend to Oracle database. We are using a config file.
+   Edit the config.txt file and edit the username,password and connect string
+
+ADB_USER="ADMIN"
+ADB_PASSWORD="Saturday_123"
+ADB_CONNECTSTRING="simba_low"
+
+
+Edit ./backend/target/classes/application.yaml to set the database service and user password
   ![](images/application-yaml.png " ")
 
 5. Copy the edited ./backend/target/classes/application.yaml to ./backend/src/main/resources/application.yaml
