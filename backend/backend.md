@@ -55,49 +55,65 @@ As with most React applications (https://reactjs.org/), this application uses re
 
 2. copy the Python/Flask Todo app from github.
 
-   ```<copy>
-   mkdir ~/mtdrworkshop/python
-   cd  ~/mtdrworkshop/python
-   git clone https://github.com/vijaybalebail/Todo-List-Dockerized-Flask-WebApp.git
-   cd Todo-List-Dockerized-Flask-WebApp
-   unzip ~/mtdrworkshop/setup-dev-environment/wallet.zip</copy>
-	 ```
+     ```
+     <copy>
+      mkdir ~/mtdrworkshop/python
+      cd ~/mtdrworkshop/python
+      git clone https://github.com/vijaybalebail/Todo-List-Dockerized-Flask-WebApp.git
+      cd Todo-List-Dockerized-Flask-WebApp
+  	 ```
 
 3. Unzip the database wallte.zip file within the new web app.
-   ```
-   <copy>unzip ~/mtdrworkshop/setup-dev-environment/wallet.zip</copy>
-	 ```
+     ```
+     <copy>unzip ~/mtdrworkshop/setup-dev-environment/wallet.zip</copy>
+  	 ```
 
 3.  Pick mtdrb_tp service alias (see the list of aliases in
-   ./backend/target/classes/wallet/tnsnames.ora)
+   ./tnsnames.ora)
 
    ![](images/tnsnames-ora.png " ")
 
 4. There are many ways to pass database credentials from the backend to Oracle database. We are using a config file.
-   Edit the config.txt file and edit the username,password and connect string
+   Edit the config.cfg file and edit the username,password and connect string. This user and password  is the one created during lab_setup.
 
-ADB_USER="ADMIN"
-ADB_PASSWORD="Saturday_123"
-ADB_CONNECTSTRING="simba_low"
+     ```
+     <copy>
+     ADB_USER="TODOUSER"
+     ADB_PASSWORD="Oracle"
+     ADB_CONNECTSTRING="mtdrdb_tp"
+     </copy>
+     ```
 
-
-Edit ./backend/target/classes/application.yaml to set the database service and user password
-  ![](images/application-yaml.png " ")
-
-5. Copy the edited ./backend/target/classes/application.yaml to ./backend/src/main/resources/application.yaml
-
-6. Edit ./backend/src/main/java/com/oracle/todoapp/Main.java
-    - Locate the following code fragment
-    ![](images/CORS-Main.png " ")
-    - Replace `eu-frankfurt-1` in  `"https://objectstorage.eu-frankfurt-1.oraclecloud.com"` by your region
-
-    - Save the file
-
-7. Run `build.sh` script to build and push the
-    microservices images into the repository
+7. We now can build the a docker image with Python, Oracle Client , and the todo application app.js.
+   Look at the construct of the Dockerfile and execute the command to build the docker image.
 
     ```
-    <copy>cd $MTDRWORKSHOP_LOCATION/backend; ./build.sh</copy>
+    <copy> docker build  -t todolist-flask:latest . </copy>
+
+     (us-ashburn-1)$ docker build  -t todolist-flask:latest .
+    Sending build context to Docker daemon  1.297MB
+    Step 1/15 : FROM oraclelinux:7-slim
+    Trying to pull repository docker.io/library/oraclelinux ...
+    7-slim: Pulling from docker.io/library/oraclelinux
+    7627bfb99533: Pull complete
+
+
+    Step 15/15 : CMD python3 app.py
+     ---> Running in 94ef1e230b45
+    Removing intermediate container 94ef1e230b45
+     ---> 02f268c26542
+    Successfully built 02f268c26542
+    Successfully tagged todolist-flask:latest
+    ```
+
+    Verify that the images are CREATED.
+    ```
+    $ <copy>
+    docker images</copy>
+    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+    todolist-flask      latest              02f268c26542        34 seconds ago      477MB
+    oraclelinux         7-slim              0a28ba78f4c9        2 months ago        132MB
+
     ```
   In a couple of minutes, you should have successfully built and pushed the images into the OCIR repository.
 
@@ -105,12 +121,14 @@ Edit ./backend/target/classes/application.yaml to set the database service and u
     - Go to the Console, click the hamburger menu in the top-left corner and open
     **Developer Services > Container Registry**.
 
-   ![](images/Registry-root-compart.png " ")
+   ![](images/registry_root_compartment.png " ")
 
 9. Mark Access as Public  (if Private)  
    (**Actions** > **Change to Public**):
 
    ![](images/Public-access.png " ")
+
+## **STEP 3**: Create ImagePullSecret
 
 ## **STEP 3**: Deploy on Kubernetes and Check the Status
 
