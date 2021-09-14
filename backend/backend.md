@@ -61,11 +61,14 @@ As with most React applications (https://reactjs.org/), this application uses re
       cd ~/mtdrworkshop/python
       git clone https://github.com/vijaybalebail/Todo-List-Dockerized-Flask-WebApp.git
       cd Todo-List-Dockerized-Flask-WebApp
+      </copy>
   	 ```
 
 3. Unzip the database wallte.zip file within the new web app.
      ```
-     <copy>unzip ~/mtdrworkshop/setup-dev-environment/wallet.zip</copy>
+     <copy>
+     unzip ~/mtdrworkshop/setup-dev-environment/wallet.zip
+     </copy>
   	 ```
 
 3.  Pick mtdrb_tp service alias (see the list of aliases in
@@ -84,7 +87,7 @@ As with most React applications (https://reactjs.org/), this application uses re
      </copy>
      ```
 
-7. We now can build the a docker image with Python, Oracle Client , and the todo application app.js.
+5. We now can build the a docker image with Python, Oracle Client , and the todo application app.js.
    Look at the construct of the Dockerfile and execute the command to build the docker image.
 
     ```
@@ -115,37 +118,89 @@ As with most React applications (https://reactjs.org/), this application uses re
     oraclelinux         7-slim              0a28ba78f4c9        2 months ago        132MB
 
     ```
+## **STEP 3**: Run Docker image locally and verify.
+   We created our image using the command docker build. Now that we have an image, we can run that image and see if our application is running correctly. Since we are running a application that listens on a port, we will have to run this in Detach or background mode.
+
+  1. Run image locally and verify the image is running.
+
+     ```
+     <copy>
+     docker run -d  -p 5003:5000  todolist-flask:latest
+     docker ps
+     </copy>
+      $    docker ps
+      CONTAINER ID        IMAGE                   COMMAND                       PORTS                    NAMES
+      b167d3a24057        todolist-flask:latest   "/bin/sh -c 'python3…"    0.0.0.0:5003->5000/tcp   relaxed_shirley
+
+     ```
+
+  2. Run curl get script to verify you can access data locally.
+     ```
+     <copy>
+       curl -GET http://0.0.0.0:5003/todolist/foo
+     </copy>
+     ```
+
+## **STEP 4**: Tag & push image to the registry.
+
+   1. Now that you have a docker image running locally, you are now ready to run it from OKE cluster.
+   Give a tag to the image that you're going to push to Oracle Cloud Infrastructure Registry by entering:
+     ```
+     <copy>
+     docker tag todolist-flask:latest $DOCKER_REGISTRY/todolist-flask:latest
+     docker push $DOCKER_REGISTRY/todolist-flask:latest
+     </copy>
+     ```
+
   In a couple of minutes, you should have successfully built and pushed the images into the OCIR repository.
 
-8. Check your container registry from the root compartment
+  2.  Check your container registry from the root compartment
     - Go to the Console, click the hamburger menu in the top-left corner and open
     **Developer Services > Container Registry**.
 
    ![](images/registry_root_compartment.png " ")
 
-9. Mark Access as Public  (if Private)  
+3. Mark Access as Public  (if Private)  
    (**Actions** > **Change to Public**):
 
    ![](images/Public-access.png " ")
 
-## **STEP 3**: Create ImagePullSecret
 
-## **STEP 3**: Deploy on Kubernetes and Check the Status
 
-1. Run the `deploy.sh` script
+## **STEP 5**: Deploy on Kubernetes and Check the Status
+
+1. Verify the todo.yaml file.
+   Ensure you have the image name in oracle docker registory, the name of the imagePullSecret that was created in step 5 of lab1.
 
 	```
-	<copy>cd $MTDRWORKSHOP_LOCATION/backend; ./deploy.sh</copy>
+	<copy>cd ~/mtdrworkshop/python/Todo-List-Dockerized-Flask-WebApp;
+        sed -i "s|%DOCKER_REGISTRY%|${DOCKER_REGISTRY}|g" todo.yaml
+        kubectl create -f todo.yaml
+  </copy>
 	```
-
-	--> service/todolistapp-helidon-se-service created
-
-	--> deployment.apps/todolistapp-helidon-se-deployment created
 
 2. Check the status using the following commands
-$ kubectl get services
+    ```
+     $ <copy>
+      kubectl get all </copy>
+     $ kubectl get all
+    NAME                                      READY   STATUS             RESTARTS   AGE
+    pod/todo-deployment-657895dd59-qd89j      1/1     Running            0          3m1s
 
-	The following command returns the Kubernetes service of MyToDo application with a load balancer exposed through an external API
+    NAME                   TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)          AGE
+    service/kubernetes     ClusterIP      10.96.0.1     <none>           443/TCP          32h
+    service/todo-service   LoadBalancer   10.96.77.65   132.226.36.134   8080:31093/TCP   3m1s
+
+    NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+    deployment.apps/todo-deployment      1/1     1            1           3m2s
+
+    NAME                                            DESIRED   CURRENT   READY   AGE
+    replicaset.apps/todo-deployment-657895dd59      1         1         1       3m2s
+
+    ```
+
+
+	The following command returns the Kubernetes service of ToDo application with a load balancer exposed through an external API
 	```
 	<copy>kubectl get services</copy>
 	```
@@ -162,33 +217,35 @@ $ kubectl get services
 4. Continuously tailing the log of one of the pods
 
   $ kubectl logs -f <pod name>
-  Example kubectl lgs -f todolistapp-helidon-se-deployment-7fd6dcb778-c9dbv
+  Example kubectl logs -f todo-deployment-657895dd59-qd89j
 
-  Returns:
-  http://130.61.66.27/todolist
+5. For debugging deployment issues, you can run describe command and look at the errors at the end.
 
-## **STEP 4**: UnDeploy (optional)
+    kubectl describe pod <pod name>
+    Example kubectl describe pod todo-deployment-657895dd59-qd89j
 
-  If you make changes to the image, you need to delete the service and the pods by running undeploy.sh then redo Steps 2 & 3.
+6. Now that your application has a external ipaddress, you can now access it both through curl and any web browser.
+    ```
+    curl -X GET http:<external_ipaddress>:8080/todolist
+    or
+    open a browser to the link http:<external_ipaddress:8080/todolist.
+    ```
 
-1. Run the `undeploy.sh` script
-	```
-		<copy>cd $MTDRWORKSHOP_LOCATION/backend; ./undeploy.sh</copy>
-	```
-2. Rebuild the image + Deploy + (Re)Configure the API Gateway
 
 
-## **STEP 5**: Configure the API Gateway
+## **STEP 6**: Configure the API Gateway
+
+A common requirement is to build an API with the HTTP or HTTPS URL of a back-end service, We can provide a  front-end HTTPS access to the back-end URL using API Gateway..
 
 The API Gateway protects any RESTful service running on Container Engine for Kubernetes, Compute, or other endpoints through policy enforcement, metrics and logging.
-Rather than exposing the Helidon service directly, we will use the API Gateway to define cross-origin resource sharing (CORS).
+Rather than exposing the Todo App directly, we will use the API Gateway to define cross-origin resource sharing (CORS).
 
 1. From the hamburger  menu navigate **Developer Services** > **API Management > Create Gateway**
    ![](images/API-Gateway-menu.png " ")
 
 2. Configure the basic info: name, compartment, VCN and Subnet
     - VCN: pick on of the vitual circuit network
-    - Subnet pick the public subnet   
+    - Subnet pick the public subnet (svclbsubnet)
 
 	The click "Create".
   	![](images/Basic-gateway.png " ")
@@ -200,34 +257,32 @@ Rather than exposing the Helidon service directly, we will use the API Gateway t
    ![](images/Deployment-menu.png " ")
 
 5. Create a todolist deployment
-   ![](images/Deployment.png " ")
+   ![](images/basicInformationdeploment.png " ")
 
-6. Configure Cross-origin resource sharing (CORS) policies.
-	- CORS is a security mechanism that will prevent running application loaded from origin A  from using resources from another origin B.
-	- Allowed Origins: is the list of all servers (origins) that are allowed to access the API deployment typically your Kubernetes cluster IP.
-	- Allowed methods: GET, PUT, DELETE, POST, OPTIONS are all needed.
-
-	![](images/Origins-Methods.png " ")
-
-7. Configure the Headers
-    ![](images/Headers.png " ")
-
-8. Configure the routes: we will define two routes:
-    - /todolist for the first two APIs: GET, POST and OPTIONS
+6. Configure the routes: we will define two routes:
+    - /tododo for the first two APIs: GET, POST and OPTIONS
     ![](images/Route-1.png " ")
 
-    - /todolist/{id} for the remaining three APIs: (GET, PUT and DELETE)
-	![](images/Route-2.png " ")
+    - add  /todolist/delete route API: (GET, PUT and DELETE)
+	   ![](images/Route-2.png " ")
+
+     - add  /todolist/add route APIs.
+ 	   ![](images/Route-3.png " ")
+
+     - add  /todolist/update route API.
+      ![](images/Route-4.png " ")
 
 
-## **STEP 6**: Testing the backend application through the API Gateway
+
+
+## **STEP 7**: Testing the backend application through the API Gateway
 
 1. Navigate to the newly create Gateway Deployment Detail an copy the endpoint
    ![](images/Gateway-endpoint.png " ")
 
 2. Testing through the API Gateway endpoint
-  postfix the gateway endpoint with "/todolist" as shown in the image below
-   ![](images/Backend-Testing.png " ")
+  postfix the gateway endpoint with "/todolist/todos" as shown in the image below
+
 
   It should display the Todo Item(s) in the TodoItem table. At least the row you have created in Lab 1.
 
