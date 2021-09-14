@@ -1,5 +1,5 @@
 {
-  "workshoptitle": "My ToDo List App with React JS",
+  "workshoptitle": "My ToDo List App with Python, Flask, SQLAlchemy and ADB",
   "help": "livelabs-help-db_us@oracle.com",
     "tutorials": [
       {
@@ -19,10 +19,6 @@
       {
         "title": "Lab 2: Backend (Python/Flask)",
         "filename": "../../backend/backend.md"
-      },
-      {
-        "title": "Lab 3: Frontend (React JS)",
-        "filename": "../../frontend/frontend.md"
       },
       {
         "title": "Need Help?",

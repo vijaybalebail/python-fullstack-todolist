@@ -12,14 +12,13 @@ Estimated Lab Time: 70 minutes
 
 You will will learn how to use the Autonomous Database, the Container Registry, the Kubernetes Cluster (OKE) , Python/Flask  and the API Gateway managed services of the Oracle Cloud Infrastructure through the deployment of a simple MyToDo List React JS application.
 
-![](./images/FullstackArch.png " ")
+![](./images/FullstackArch1.png " ")
 
 ### Objectives
 
-In this 3 parts lab, you will:
+In this 2 parts lab, you will:
 * Provision a Kubernetes cluster, an Oracle Autonomous Database instance, a Container Registry, and an API Gateway
-* Understand, build and deploy a Python/Flask application implementing the REST APIs, using the  Docker, the OCI Container Registry and a Kubernetes service.
-* Understand, build and deploy a ReactJS frontend/UI making REST calls to the Python/Flask docker application using REST APIs; then redeploy the ReactJS frontend over an OCI Object storage bucket
+* Understand, build and deploy a Python/Flask application implementing the REST APIs, using Docker, OCI Container Registry and Oracle Kubernetes service (OKE).
 
 ### Prerequisites
 
