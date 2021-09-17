@@ -88,7 +88,15 @@ As with most React applications (https://reactjs.org/), this application uses re
      </copy>
      ```
 
-5. We now can build the a docker image with Python, Oracle Client , and the todo application app.js.
+5. Edit the sqlnet.ora and change the wallet directory to "/app"
+
+  ```
+	<copy>
+	WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="/app")))
+  SSL_SERVER_DN_MATCH=yes
+	</copy>
+	```
+6. We now can build the a docker image with Python, Oracle Client , and the todo application app.js.
    Look at the construct of the Dockerfile and execute the command to build the docker image.
 
     ```
@@ -175,6 +183,7 @@ As with most React applications (https://reactjs.org/), this application uses re
 
 	```
 	<copy>cd ~/mtdrworkshop/python/Todo-List-Dockerized-Flask-WebApp;
+	      cp todo_template.yaml todo.yaml
         sed -i "s|%DOCKER_REGISTRY%|${DOCKER_REGISTRY}|g" todo.yaml
         kubectl create -f todo.yaml
   </copy>
@@ -287,7 +296,7 @@ Rather than exposing the Todo App directly, we will use the API Gateway to defin
 
   It should display the Todo Item(s) in the TodoItem table. At least the row you have created in Lab 1.
 
-Congratulations, you have completed lab 2; you may now [proceed to the next lab](#next).
+
 
 ## Acknowledgements
 
