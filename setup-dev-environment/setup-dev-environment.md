@@ -185,7 +185,7 @@ Estimated Lab Time: ~25 minutes
 		<copy>
      cd ~/mtdrworkshop/setup-dev-environment
      OCID=$( cat ~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt )
-    ./generateWallet.sh < cat ~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt
+    ./generateWallet.sh $OCID
      </copy>
 		```
     - Execute generateWallet.sh ocid1.autonomousdatabase.oc1.phx.abyhqlj....
@@ -301,21 +301,37 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
 
 8. Go to Cloud Shell, at the workshop root directory and run the
    dockerLogin.sh scripts ...
- `./dockerLogin.sh  <USERNAME> "<AUTH_TOKEN>"` where
+ `. ./dockerLogin.sh  <USERNAME> "<AUTH_TOKEN>"` where
 
 	* `<USERNAME>` - is the username used to log in (typically your email address). If your username is federated from Oracle Identity Cloud Service, you need to add the `oracleidentitycloudservice/` prefix to your username, for example `oracleidentitycloudservice/firstname.lastname@something.com`
+  Note: Please run the script with . ./dockerLogin.sh. This will help to export the username and AUTH token which is useful in the next step.
 
 	* `"<AUTH_TOKEN>"` - paste the generated token value and enclose the value in quotes.
 
-	For example `dockerLogin.sh user.foo@bar.com "8nO[BKNU5iwasdf2xeefU;yl"`
+	For example `. ./dockerLogin.sh user.foo@bar.com "8nO[BKNU5iwasdf2xeefU;yl"`
 
-9. Once successfully logged into Container Docker Registry, you should see the "Login Succeeded" in the cloud shell.
+  Once successfully logged into Container Docker Registry, you should see the "Login Succeeded" in the cloud shell.
 
    We can list the existing docker images. Since this is the first time logging into Registry, no images will be shown.
 
     ```
     <copy>docker images </copy>
     ```
+
+## **STEP 5**:  Create a imagePullSecret  for the Tutorial
+To enable Kubernetes to pull an image from Oracle Cloud Infrastructure Registry when deploying an application, you need to create a Kubernetes secret. The secret includes all the login details you would provide if you were manually logging in to Oracle Cloud Infrastructure Registry using the docker login command, including your auth token.
+
+```
+<copy>
+echo MTDRWORKSHOP_OCIR_NAMESPACE... $MTDRWORKSHOP_OCIR_NAMESPACE
+echo MTDRWORKSHOP_REGION... $MTDRWORKSHOP_REGION
+echo MTDRWORKSHOP_OCIR_USER... $MTDRWORKSHOP_OCIR_USER
+echo MTDRWORKSHOP_OCIR_AUTHKEY... $MTDRWORKSHOP_OCIR_AUTHKEY
+
+ kubectl create secret docker-registry todolistpullsecret3 --docker-server=$MTDRWORKSHOP_REGION --docker-username='$MTDRWORKSHOP_OCIR_NAMESPACE/$MTDRWORKSHOP_OCIR_USER'  --docker-password=$MTDRWORKSHOP_OCIR_AUTHKEY
+ </copy>
+```
+
 <!--
 ## **STEP 5**: Install GraalVM in Cloud Shell
 
@@ -337,7 +353,7 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
       ```
 -->
 
-## **STEP 5**: Access OKE from the Cloud Shell
+## **STEP 6**: Access OKE from the Cloud Shell
 
 1. Create the mtdrworkshop/workingdir/mtdrworkshopclusterid.txt file
 
@@ -365,7 +381,7 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
 
   ![](images/verifyOKEOutput.png " ")
 
-## **STEP 6**: Configuring Network Security Rules
+## **STEP 7**: Configuring Network Security Rules
 1. The network security rules control the inbound (Ingres) and the outbound (Egress) traffic. As we will be configuring the API Gateway in Part II, we will not set tight security rules at the Kubernetes cluster level.
 2. Navigate to **Developer Services > Kubernetes Clusters**
    	- Click on the **mtdrworkshopcluster**
