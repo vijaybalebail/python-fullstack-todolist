@@ -4,7 +4,7 @@
 
 In this  lab, you will configure your development environment and collect information that will be used later throughout this workshop.
 
-Estimated Lab Time: ~25 minutes
+Estimated Time: ~25 minutes
 
 ### Objectives
 
@@ -12,7 +12,7 @@ Estimated Lab Time: ~25 minutes
 * Download the workshop code and scripts from GitHub
 * Set up an OCI Compartment and install a two nodes OKE cluster
 * Create the ATP database, the user schema and a database table
-* Install GraalVM  
+* Install GraalVM   
 * Create an OCI Registry and Auth key
 * Access OKE from the Cloud Shell
 
@@ -20,7 +20,7 @@ Estimated Lab Time: ~25 minutes
 
 - This lab requires an [Oracle Cloud account](https://www.oracle.com/cloud/free/). You may use your own cloud account, a cloud account that you obtained through a trial, a Free Tier account, or a LiveLabs account.
 
-## **STEP 1**: Launch the Cloud Shell and Clone mtdrworkshop GitHup repository
+## Task 1: Launch the Cloud Shell and Clone mtdrworkshop GitHup repository
 
 1. Launch Cloud Shell
 
@@ -63,7 +63,7 @@ Estimated Lab Time: ~25 minutes
 
 	IF YOU ARE DISCONNECTED OR LOGGED OFF AND RETURN TO CLOUD SHELL, MAKE SURE YOU ARE IN THE ~/mtdrworkshop DIRECTORY.
 
-## **STEP 2**: Create an OCI compartment and an OKE cluster in that compartment
+## Task 2: Create an OCI compartment and an OKE cluster in that compartment
 
  1. Open up the hamburger menu in the top-left corner of the Console and select **Identity > Compartments**.
 
@@ -89,9 +89,9 @@ Estimated Lab Time: ~25 minutes
   5. Run `./setCompartmentId.sh <COMPARTMENT_OCID> <REGION_ID>` where your `<COMPARTMENT_OCID>` and `<REGION_ID>` values are set as arguments.
 
       For example:
-
+      ```
        `./setCompartmentId.sh ocid1.compartment.oc1..aaaaaaaaxbvaatfz6yourcomparmentidhere5dnzgcbivfwvsho77myfnqq us-ashburn-1`
-
+      ```
        This will set the environment variables that will allow other scripts to pick the information.
 
   6.  To create an OKE cluster, return to the OCI console and open up the hamburger button in the top-left corner of the Console and go to **Developer Services > Kubernetes Clusters**.
@@ -126,7 +126,7 @@ Estimated Lab Time: ~25 minutes
     There is no need to wait for the cluster to be fully provisioned at this point as we will verify cluster creation and create a kube config in order to access it in a later step.
 
 
-## **STEP 3**: Create the ATP database
+## Task 3: Create the ATP database
 
 1. Open up the hamburger menu in the top-left corner of the Console and select **Autonomous Transaction Processing**.
 
@@ -157,14 +157,17 @@ Estimated Lab Time: ~25 minutes
 
 5. Populate mtdrworkshopdbid.txt with the database OCID
 
-  	- Create  the `~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt` file.
-		```
-		<copy>touch ~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt</copy>
-		```
+  - Create  the `~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt` file.
+
+    ```
+    <copy>touch ~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt</copy>
+    ```
+
 
     ![](images/42-copy-atp-ocids2.png " ")
 
-    - Copy the OCID of the newly created database from the Cloud console and
+
+  - Copy the OCID of the newly created database from the Cloud console and
     add it into `~/mtdrworkshop/workingdir/mtdrworkshopdbid.txt` file.
 
     ```
@@ -258,7 +261,7 @@ Estimated Lab Time: ~25 minutes
 
 -->
 
-## **STEP 4**: Create an OCI Registry and Auth key
+## Task 4: Create an OCI Registry and Auth key
 
 You are now going to create an Oracle Cloud Infrastructure Registry and an Auth key. The Oracle Cloud Infrastructure Registry is an Oracle-managed registry that enables you to simplify your development-to-production workflow by storing, sharing, and managing development artifacts such as Docker images.
 
@@ -333,7 +336,7 @@ echo MTDRWORKSHOP_OCIR_AUTHKEY... $MTDRWORKSHOP_OCIR_AUTHKEY
 ```
 
 <!--
-## **STEP 5**: Install GraalVM in Cloud Shell
+## **Task 5**: Install GraalVM in Cloud Shell
 
  We will be using JDK 11 in Cloud Shell to build the Java/Helidon image
 1.  Set some environment variables and run the following commands
@@ -353,7 +356,7 @@ echo MTDRWORKSHOP_OCIR_AUTHKEY... $MTDRWORKSHOP_OCIR_AUTHKEY
       ```
 -->
 
-## **STEP 6**: Access OKE from the Cloud Shell
+## Task 5: Access OKE from the Cloud Shell
 
 1. Create the mtdrworkshop/workingdir/mtdrworkshopclusterid.txt file
 
@@ -381,7 +384,8 @@ echo MTDRWORKSHOP_OCIR_AUTHKEY... $MTDRWORKSHOP_OCIR_AUTHKEY
 
   ![](images/verifyOKEOutput.png " ")
 
-## **STEP 7**: Configuring Network Security Rules
+## Task 6: Configuring Network Security Rules
+
 1. The network security rules control the inbound (Ingres) and the outbound (Egress) traffic. As we will be configuring the API Gateway in Part II, we will not set tight security rules at the Kubernetes cluster level.
 2. Navigate to **Developer Services > Kubernetes Clusters**
    	- Click on the **mtdrworkshopcluster**

@@ -4,7 +4,7 @@
 
 In this workshop, you will learn how to build and deploy a simple  Cloud native application using the most commonly used frameworks and the Oracle Cloud Infrastructure services.
 
-Estimated Lab Time: 70 minutes
+Estimated Workshop Time: 70 minutes
 
 ![](./images/Application.png " ")
 
