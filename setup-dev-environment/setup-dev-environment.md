@@ -300,15 +300,24 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
   ![](images/26-save-auth-token.png " ")
 
 8. Go to Cloud Shell, at the workshop root directory and run the
-   dockerLogin.sh scripts ...
- `. ./dockerLogin.sh  <USERNAME> "<AUTH_TOKEN>"` where
+   dockerLogin.sh scripts
 
-	* `<USERNAME>` - is the username used to log in (typically your email address). If your username is federated from Oracle Identity Cloud Service, you need to add the `oracleidentitycloudservice/` prefix to your username, for example `oracleidentitycloudservice/firstname.lastname@something.com`
-  Note: Please run the script with . ./dockerLogin.sh. This will help to export the username and AUTH token which is useful in the next step.
+ ````
+ . ./dockerLogin.sh  USERNAME AUTH_TOKEN
 
-	* `"<AUTH_TOKEN>"` - paste the generated token value and enclose the value in quotes.
+ ````
 
-	For example `. ./dockerLogin.sh user.foo@bar.com "8nO[BKNU5iwasdf2xeefU;yl"`
+    <USERNAME> - is the username used to log in (typically your email address). If your username is federated from Oracle Identity Cloud Service, you need to add the oracleidentitycloudservice/ prefix to your username.
+
+    Example oracleidentitycloudservice/firstname.lastname@something.com
+    Note: Please run the script with . ./dockerLogin.sh. This will help to export the username and AUTH token which is useful in the next step.
+
+	   `"<AUTH_TOKEN>"` - paste the generated token value and enclose the value in quotes.
+
+	For example
+  ```
+  . ./dockerLogin.sh user.foo@bar.com "8nO[BKNU5iwasdf2xeefU;yl"
+  ```
 
   Once successfully logged into Container Docker Registry, you should see the "Login Succeeded" in the cloud shell.
 
@@ -323,10 +332,10 @@ To enable Kubernetes to pull an image from Oracle Cloud Infrastructure Registry 
 
 ```
 <copy>
-echo MTDRWORKSHOP_OCIR_NAMESPACE... $MTDRWORKSHOP_OCIR_NAMESPACE
-echo MTDRWORKSHOP_REGION... $MTDRWORKSHOP_REGION
-echo MTDRWORKSHOP_OCIR_USER... $MTDRWORKSHOP_OCIR_USER
-echo MTDRWORKSHOP_OCIR_AUTHKEY... $MTDRWORKSHOP_OCIR_AUTHKEY
+echo MTDRWORKSHOP_OCIR_NAMESPACE = $MTDRWORKSHOP_OCIR_NAMESPACE
+echo MTDRWORKSHOP_REGION = $MTDRWORKSHOP_REGION
+echo MTDRWORKSHOP_OCIR_USER = $MTDRWORKSHOP_OCIR_USER
+echo MTDRWORKSHOP_OCIR_AUTHKEY = $MTDRWORKSHOP_OCIR_AUTHKEY
 
  kubectl create secret docker-registry todolistpullsecret3 --docker-server=$MTDRWORKSHOP_REGION --docker-username='$MTDRWORKSHOP_OCIR_NAMESPACE/$MTDRWORKSHOP_OCIR_USER'  --docker-password=$MTDRWORKSHOP_OCIR_AUTHKEY
  </copy>

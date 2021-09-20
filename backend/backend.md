@@ -82,8 +82,8 @@ As with most React applications (https://reactjs.org/), this application uses re
      ```
      <copy>
      ADB_USER="TODOUSER"
-     ADB_PASSWORD="Oracle"
-     ADB_CONNECTSTRING="mtdrdb_tp"
+     ADB_PASSWORD="Saturday_123"
+     ADB_TNSNAMEs="mtdrdb_tp"
      </copy>
      ```
 
