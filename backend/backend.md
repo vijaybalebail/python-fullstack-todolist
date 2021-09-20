@@ -7,7 +7,7 @@ In this lab,
 - you will deploy the Docker image to OKE.
 - then configure the API Gateway.
 
-Estimated time: ~45 -minutes.
+Estimated time: ~45 minutes.
 
 ### Understanding the Python/backend application
 
@@ -32,9 +32,10 @@ As with most React applications (https://reactjs.org/), this application uses re
 - This lab requires the completion of lab 1 and the provision of the OCI components.
 
 
-## **STEP 1**: Set values for workshop environment variables
+## **Task 1**: Set values for workshop environment variables
 
 1. Set the root directory of the workshop
+
 	```
 	<copy>export MTDRWORKSHOP_LOCATION=~/mtdrworkshop</copy>
 	```
