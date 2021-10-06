@@ -240,12 +240,13 @@ As with most React applications (https://reactjs.org/), this application uses re
     or
     open a browser to the link http:<external_ipaddress:8080/todolist.
     ```
+    ![](./images/Application.png " ")
 
 
+## Task 6: Configure the API Gateway (optional steps)
 
-## Task 6: Configure the API Gateway
-
-A common requirement is to build an API with the HTTP or HTTPS URL of a back-end service, We can provide a  front-end HTTPS access to the back-end URL using API Gateway..
+A common requirement is to build an API endpoints for docker applications with the HTTP/HTTPS URL of a back-end service.
+This can be done using Oracle API Gateway service.
 
 The API Gateway protects any RESTful service running on Container Engine for Kubernetes, Compute, or other endpoints through policy enforcement, metrics and logging.
 Rather than exposing the Todo App directly, we will use the API Gateway to define cross-origin resource sharing (CORS).
@@ -300,6 +301,4 @@ Rather than exposing the Todo App directly, we will use the API Gateway to defin
 
 ## Acknowledgements
 
-* **Author** -  - Kuassi Mensah, Dir. Product Management, Java Database Access
-* **Contributors** - Jean de Lavarene, Sr. Director of Development, JDBC/UCP
-* **Last Updated By/Date** - Anoosha Pilli, Database Product Management,  April 2021
+* **Author** -  - Vijay Balebail, Dir. Product Management.
