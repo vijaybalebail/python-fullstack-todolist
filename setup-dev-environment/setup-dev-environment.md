@@ -332,7 +332,36 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
     <copy>docker images </copy>
     ```
 
-## Task 5:  Create a imagePullSecret  for the Tutorial
+## Task 5: Access OKE from the Cloud Shell
+
+  1. Create the mtdrworkshop/workingdir/mtdrworkshopclusterid.txt file
+
+        ```
+        <copy>touch ~/mtdrworkshop/workingdir/mtdrworkshopclusterid.txt</copy>
+        ```
+
+    2. Navigate to **Developer Services > Kubernetes Clusters**
+
+    3. Copy the mdtrworkshopcluster id and paste into the newly created file
+      ![](images/mtdrworkshop-cluster-id.png " ")
+
+          ```
+          example
+           echo ocid1.cluster.oc1.yyy.xxxxx  > ~/mtdrworkshop/workingdir/mtdrworkshopclusterid.txt
+          ```
+
+    4. Run `./verifyOKEAndCreateKubeConfig.sh`
+
+        ```
+        <copy>./verifyOKEAndCreateKubeConfig.sh</copy>
+        ```
+
+     Notice `/.kube/config` is created for the OKE cluster.
+
+      ![](images/verifyOKEOutput.png " ")
+
+
+## Task 6:  Create a imagePullSecret  for the Tutorial
 To enable Kubernetes to pull an image from Oracle Cloud Infrastructure Registry when deploying an application, you need to create a Kubernetes secret. The secret includes all the login details you would provide if you were manually logging in to Oracle Cloud Infrastructure Registry using the docker login command, including your auth token.
 
 ```
@@ -346,26 +375,7 @@ echo MTDRWORKSHOP_OCIR_AUTHKEY = $MTDRWORKSHOP_OCIR_AUTHKEY
  </copy>
 ```
 
-<!--
-## **Task 5**: Install GraalVM in Cloud Shell
 
- We will be using JDK 11 in Cloud Shell to build the Java/Helidon image
-1.  Set some environment variables and run the following commands
-
-    ```
-    <copy>export MTDRWORKSHOP_LOCATION=~/mtdrworkshop</copy>
-    ```
-
-    ```
-    <copy>export WORKINGDIR=$MTDRWORKSHOP_LOCATION/workingdir</copy>
-    ```  
-
-   	Make sure to be in mtdrwokshop/setup-dev-environment directory then execute the following script
-
-      ```
-      <copy>./installGraalVM.sh</copy>
-      ```
--->
 
 ## Task 6: Access OKE from the Cloud Shell
 
