@@ -86,7 +86,9 @@ Estimated Time: ~25 minutes
 
   4. Go back into your cloud shell and verify you are in the `~/mtdrworkshop` directory.
 
-  5. Run `./setCompartmentId.sh <COMPARTMENT_OCID> <REGION_ID>` where your `<COMPARTMENT_OCID>` and `<REGION_ID>` values are set as arguments.
+  5. Run `./setCompartmentId.sh <COMPARTMENT_OCID> <REGION_ID>` where your `<COMPARTMENT_OCID>` and `<REGION_ID>`   values are set as arguments.
+
+    To find your region id, check cloud web url in the browser & look for string "region=xx-xxxx-xx".
 
       For example:
       ```
@@ -276,9 +278,9 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
 
 3. 	Click **Create Repository** , specify the following details for your new repository, and click **Create Repository**.
 	- Repository Name: `<tenancy name>/mtdrworkshop`
-		- Access: `Public`
+	- Access: `Public`
 
-  	Go to Cloud Shell and run `./addOCIRInfo.sh` with the namespace and repository name as arguments
+4.  Go to Cloud Shell and run `./addOCIRInfo.sh` with the namespace and repository name as arguments
 
 		```
 		<copy>./addOCIRInfo.sh <namespace> <repository_name></copy>
@@ -286,23 +288,23 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
 
   	For example `./addOCIRInfo.sh axkcsk2aiatb mtdrworkshop.user1/mtdrworkshop`
 
-4. You will now create the Auth token by going back to the User Settings page. Click the Profile icon in the top-right corner of the Console and select **User Settings**.
+5. You will now create the Auth token by going back to the User Settings page. Click the Profile icon in the top-right corner of the Console and select **User Settings**.
 
   ![](images/23-user-settings.png " ")
 
-5. Click on **Auth Tokens** and select **Generate Token**.
+6. Click on **Auth Tokens** and select **Generate Token**.
 
   ![](images/24-gen-auth-token.png " ")
 
-6. In the description type `mtdrworkshoptoken` and click **Generate Token**.
+7. In the description type `mtdrworkshoptoken` and click **Generate Token**.
 
   ![](images/25-gen-auth-token2.png " ")
 
-7. Copy the token value.
+8. Copy the token value.
 
   ![](images/26-save-auth-token.png " ")
 
-8. Go to Cloud Shell, at the workshop root directory and run the
+9. Go to Cloud Shell, at the workshop root directory and run the
    dockerLogin.sh scripts
 
  ````
@@ -330,7 +332,7 @@ You are now going to create an Oracle Cloud Infrastructure Registry and an Auth 
     <copy>docker images </copy>
     ```
 
-## **STEP 5**:  Create a imagePullSecret  for the Tutorial
+## Task 5:  Create a imagePullSecret  for the Tutorial
 To enable Kubernetes to pull an image from Oracle Cloud Infrastructure Registry when deploying an application, you need to create a Kubernetes secret. The secret includes all the login details you would provide if you were manually logging in to Oracle Cloud Infrastructure Registry using the docker login command, including your auth token.
 
 ```
@@ -365,7 +367,7 @@ echo MTDRWORKSHOP_OCIR_AUTHKEY = $MTDRWORKSHOP_OCIR_AUTHKEY
       ```
 -->
 
-## Task 5: Access OKE from the Cloud Shell
+## Task 6: Access OKE from the Cloud Shell
 
 1. Create the mtdrworkshop/workingdir/mtdrworkshopclusterid.txt file
 
@@ -393,7 +395,7 @@ echo MTDRWORKSHOP_OCIR_AUTHKEY = $MTDRWORKSHOP_OCIR_AUTHKEY
 
   ![](images/verifyOKEOutput.png " ")
 
-## Task 6: Configuring Network Security Rules
+## Task 7: Configuring Network Security Rules
 
 1. The network security rules control the inbound (Ingres) and the outbound (Egress) traffic. As we will be configuring the API Gateway in Part II, we will not set tight security rules at the Kubernetes cluster level.
 2. Navigate to **Developer Services > Kubernetes Clusters**
