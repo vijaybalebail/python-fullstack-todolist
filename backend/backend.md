@@ -32,7 +32,7 @@ As with most React applications (https://reactjs.org/), this application uses re
 - This lab requires the completion of lab 1 and the provision of the OCI components.
 
 
-## **Task 1**: Set values for workshop environment variables
+## Task 1: Set values for workshop environment variables
 
 1. Set the root directory of the workshop
 
@@ -47,7 +47,7 @@ As with most React applications (https://reactjs.org/), this application uses re
 	<copy>cd $MTDRWORKSHOP_LOCATION; source addAndSourcePropertiesInBashrc.sh</copy>
 	```
 
-## **STEP 2**: Build and push the Docker images to the OCI Registry
+## Task 2: Build and push the Docker images to the OCI Registry
 
 1. Ensure that the "DOCKER_REGISTRY" variable is set
 
@@ -127,7 +127,7 @@ As with most React applications (https://reactjs.org/), this application uses re
     oraclelinux         7-slim              0a28ba78f4c9        2 months ago        132MB
 
     ```
-## **STEP 3**: Run Docker image locally and verify.
+## Task 3: Run Docker image locally and verify.
    We created our image using the command docker build. Now that we have an image, we can run that image and see if our application is running correctly. Since we are running a application that listens on a port, we will have to run this in Detach or background mode.
 
   1. Run image locally and verify the image is running.
@@ -150,7 +150,7 @@ As with most React applications (https://reactjs.org/), this application uses re
      </copy>
      ```
 
-## **STEP 4**: Tag & push image to the registry.
+## Task 4: Tag & push image to the registry.
 
    1. Now that you have a docker image running locally, you are now ready to run it from OKE cluster.
    Give a tag to the image that you're going to push to Oracle Cloud Infrastructure Registry by entering:
@@ -176,7 +176,7 @@ As with most React applications (https://reactjs.org/), this application uses re
 
 
 
-## **STEP 5**: Deploy on Kubernetes and Check the Status
+## Task 5: Deploy on Kubernetes and Check the Status
 
 1. Verify the todo.yaml file.
    Ensure you have the image name in oracle docker registory, the name of the imagePullSecret that was created in step 5 of lab1.
@@ -243,7 +243,7 @@ As with most React applications (https://reactjs.org/), this application uses re
 
 
 
-## **STEP 6**: Configure the API Gateway
+## Task 6: Configure the API Gateway
 
 A common requirement is to build an API with the HTTP or HTTPS URL of a back-end service, We can provide a  front-end HTTPS access to the back-end URL using API Gateway..
 
@@ -285,7 +285,7 @@ Rather than exposing the Todo App directly, we will use the API Gateway to defin
 
 
 
-## **STEP 7**: Testing the backend application through the API Gateway
+## Task 7: Testing the backend application through the API Gateway
 
 1. Navigate to the newly create Gateway Deployment Detail an copy the endpoint
    ![](images/Gateway-endpoint.png " ")
