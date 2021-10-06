@@ -88,7 +88,7 @@ As with most React applications (https://reactjs.org/), this application uses re
      </copy>
      ```
 
-5. Edit the sqlnet.ora and change the wallet directory to "/app"
+5. Edit the sqlnet.ora and change the docker virtual wallet directory to "/app"
 
   ```
 	<copy>
@@ -163,7 +163,7 @@ As with most React applications (https://reactjs.org/), this application uses re
 
   In a couple of minutes, you should have successfully built and pushed the images into the OCIR repository.
 
-  2.  Check your container registry from the root compartment
+  2.  Check your container registry from the **root compartment**
     - Go to the Console, click the hamburger menu in the top-left corner and open
     **Developer Services > Container Registry**.
 
@@ -189,7 +189,7 @@ As with most React applications (https://reactjs.org/), this application uses re
   </copy>
 	```
 
-2. Check the status using the following commands
+2. Check the status using the following commands. Verify the status is running for pods and you have a external-ip for LoadBalancer. You may have to rerun the command as it could take a couple of minutes to allocate a ip-address.
     ```
      $ <copy>
       kubectl get all </copy>
