@@ -423,9 +423,11 @@ echo MTDRWORKSHOP_OCIR_AUTHKEY = $MTDRWORKSHOP_OCIR_AUTHKEY
   Set the Destination CIDR  as indicated (leave other fields as is) then Click `Add Ingress Rules`
   ![](images/Ingress-rule.png " ")
 
-7. Add an Egress Rule
+7. Click on Egress Rules and add an Egress Rule
   Set Stateless and Destination CIDR as indicated in the image (leave other fields as-is) then Click `Add Egress Rules`  
   ![](images/Egress-rule.png " ")
+
+  Note: Skipping this step will have issues while testing API gateways.
 
 Congratulations, you have completed lab 1; you may now [proceed to the next lab](#next).
 
