@@ -242,6 +242,7 @@ As with most React applications (https://reactjs.org/), this application uses re
     ```
     ![](./images/Application.png " ")
 
+    In this app,  Flask app provides end points and data from ADB. The GUI is rendered using https://github.com/Semantic-Org/Semantic-UI in a html templates.
 
 ## Task 6: Configure the API Gateway (optional steps)
 
