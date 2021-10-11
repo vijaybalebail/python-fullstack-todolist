@@ -11,8 +11,7 @@ Estimated Time: ~25 minutes
 * Launch Cloud Shell
 * Download the workshop code and scripts from GitHub
 * Set up an OCI Compartment and install a two nodes OKE cluster
-* Create the ATP database, the user schema and a database table
-* Install GraalVM   
+* Create the ATP database, the user schema and a database table  
 * Create an OCI Registry and Auth key
 * Access OKE from the Cloud Shell
 
