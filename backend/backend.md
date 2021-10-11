@@ -65,7 +65,7 @@ As with most React applications (https://reactjs.org/), this application uses re
       </copy>
   	 ```
 
-3. Unzip the database wallte.zip file within the new web app.
+3. Unzip the database walled.zip file within the new web app.
      ```
      <copy>
      unzip ~/mtdrworkshop/setup-dev-environment/wallet.zip
