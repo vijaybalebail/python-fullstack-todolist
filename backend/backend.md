@@ -298,7 +298,9 @@ Rather than exposing the Todo App directly, we will use the API Gateway to defin
 
   It should display the Todo Item(s) in the TodoItem table. At least the row you have created in Lab 1.
 
+   ![](images/withGateway.png " ")
 
+That is it. You have now exposed the applications endpoints through Oracle API Gateway.
 
 ## Acknowledgements
 
