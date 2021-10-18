@@ -144,9 +144,10 @@ As with most React applications (https://reactjs.org/), this application uses re
      ```
 
   2. Run curl get script to verify you can access data locally.
+
      ```
      <copy>
-       curl -GET http://0.0.0.0:5003/todolist/foo
+       curl -GET http://0.0.0.0:5003/todolist/foo2	 
      </copy>
      ```
 
@@ -236,9 +237,9 @@ As with most React applications (https://reactjs.org/), this application uses re
 
 6. Now that your application has a external ipaddress, you can now access it both through curl and any web browser.
     ```
-    curl -X GET http:<external_ipaddress>:8080/todolist
+    curl -X GET http://<external_ipaddress>:8080/todolist
     or
-    open a browser to the link http:<external_ipaddress:8080/todolist.
+    open a browser to the link http://<external_ipaddress:8080/todolist.
     ```
     ![](./images/Application.png " ")
 
