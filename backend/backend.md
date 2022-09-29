@@ -145,11 +145,11 @@ As with most React applications (https://reactjs.org/), this application uses re
 
   2. Run curl get script to verify you can access data locally.
 
-     ```
+    ```
      <copy>
        curl -GET http://0.0.0.0:5003/todolist/foo2	 
      </copy>
-     ```
+    ```
 
 ## Task 4: Tag & push image to the registry.
 
